@@ -55,7 +55,7 @@ if ($_GET['setup'] !== 'true') {
                     <input type="hidden" name="hosting_platform" value="" id="platform_hidden">
                     
                     <label>Database Host:</label>
-                    <input type="text" name="db_host" placeholder="e.g., sql200.infinityfree.com" value="sql200.infinityfree.com" required>
+                    <input type="text" name="db_host" placeholder="e.g., sql212.infinityfree.com" value="sql212.infinityfree.com" required>
                     
                     <label>Database Name:</label>
                     <input type="text" name="db_name" placeholder="e.g., if0_39899884_kamran_db" value="if0_39899884_kamran_db" required>

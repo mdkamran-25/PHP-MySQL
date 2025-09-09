@@ -21,7 +21,7 @@ class Database {
         // Auto-detect hosting environment
         if ($this->isInfinityFree()) {
             // InfinityFree configuration for account if0_39899884
-            $this->host = 'sql200.infinityfree.com'; // Will be provided by InfinityFree
+            $this->host = 'sql212.infinityfree.com'; // Your actual MySQL hostname
             $this->port = 3306;
             $this->dbname = $_ENV['DB_NAME'] ?? 'if0_39899884_kamran_db'; // Your actual database name
             $this->username = $_ENV['DB_USER'] ?? 'if0_39899884'; // Your username
