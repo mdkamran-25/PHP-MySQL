@@ -44,9 +44,14 @@ class Database {
     }
 
     private function isInfinityFree() {
-        return strpos($_SERVER['HTTP_HOST'] ?? '', '.infinityfreeapp.com') !== false ||
-               strpos($_SERVER['HTTP_HOST'] ?? '', '.000.pe') !== false ||
-               strpos($_SERVER['HTTP_HOST'] ?? '', 'kamran.gamer.gd') !== false;
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        return strpos($host, '.infinityfreeapp.com') !== false ||
+               strpos($host, '.000.pe') !== false ||
+               strpos($host, '.rf.gd') !== false ||
+               strpos($host, '.great-site.net') !== false ||
+               strpos($host, '.somee.com') !== false ||
+               strpos($host, 'kamran.gamer.gd') !== false ||
+               strpos($host, 'if0_39899884') !== false;
     }
 
     private function is000webhost() {
