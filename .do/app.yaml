@@ -3,7 +3,7 @@ services:
   - name: web
     source_dir: /
     github:
-      repo: your-username/product-catalog-backend
+      repo: mdkamran-25/PHP-MySQL
       branch: main
     run_command: php -S 0.0.0.0:8080 -t .
     environment_slug: php
