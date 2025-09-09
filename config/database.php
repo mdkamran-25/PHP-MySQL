@@ -1,8 +1,7 @@
 <?php
 /**
- * Database Configuration
- * Secure database connection with error handling
- * Production-ready for DigitalOcean deployment
+ * Database Configuration for Free Hosting
+ * Supports InfinityFree, 000webhost, and other free PHP hosting
  */
 
 class Database {
@@ -19,16 +18,23 @@ class Database {
     }
 
     private function setCredentials() {
-        // Check for DigitalOcean DATABASE_URL environment variable
-        if (isset($_ENV['DATABASE_URL']) && !empty($_ENV['DATABASE_URL'])) {
-            $dbConfig = $this->parseUrl($_ENV['DATABASE_URL']);
-            $this->host = $dbConfig['host'];
-            $this->port = $dbConfig['port'] ?? 25060;
-            $this->dbname = $dbConfig['database'];
-            $this->username = $dbConfig['user'];
-            $this->password = $dbConfig['password'];
+        // Auto-detect hosting environment
+        if ($this->isInfinityFree()) {
+            // InfinityFree configuration for account if0_39899884
+            $this->host = 'sql200.infinityfree.com'; // Will be provided by InfinityFree
+            $this->port = 3306;
+            $this->dbname = $_ENV['DB_NAME'] ?? 'if0_39899884_productcatalog'; // Your database name
+            $this->username = $_ENV['DB_USER'] ?? 'if0_39899884'; // Your username
+            $this->password = $_ENV['DB_PASS'] ?? 'your_password'; // Replace with actual password
+        } elseif ($this->is000webhost()) {
+            // 000webhost configuration
+            $this->host = 'localhost';
+            $this->port = 3306;
+            $this->dbname = $_ENV['DB_NAME'] ?? 'id12345_productcatalog'; // Replace with your DB name
+            $this->username = $_ENV['DB_USER'] ?? 'id12345_username'; // Replace with your username
+            $this->password = $_ENV['DB_PASS'] ?? 'your_password'; // Replace with your password
         } else {
-            // Fallback to local development settings
+            // Local development
             $this->host = 'localhost';
             $this->port = 3306;
             $this->dbname = 'product_catalog';
@@ -37,39 +43,32 @@ class Database {
         }
     }
 
-    private function parseUrl($url) {
-        $parsed = parse_url($url);
-        return [
-            'host' => $parsed['host'],
-            'port' => $parsed['port'] ?? 25060,
-            'database' => ltrim($parsed['path'], '/'),
-            'user' => $parsed['user'],
-            'password' => $parsed['pass']
-        ];
+    private function isInfinityFree() {
+        return strpos($_SERVER['HTTP_HOST'] ?? '', '.infinityfreeapp.com') !== false ||
+               strpos($_SERVER['HTTP_HOST'] ?? '', '.000.pe') !== false ||
+               strpos($_SERVER['HTTP_HOST'] ?? '', 'kamran.gamer.gd') !== false;
+    }
+
+    private function is000webhost() {
+        return strpos($_SERVER['HTTP_HOST'] ?? '', '.000webhostapp.com') !== false;
     }
 
     private function connect() {
         try {
-            // Build DSN based on environment
-            if (isset($_ENV['DATABASE_URL'])) {
-                // Production: DigitalOcean managed database
-                $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};charset=utf8mb4";
-                $options = [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES => false,
-                    PDO::MYSQL_ATTR_SSL_CA => '/etc/ssl/certs/ca-certificates.crt',
-                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
-                ];
-            } else {
-                // Development: Local MySQL
+            if ($this->isLocalhost()) {
+                // Local development with socket
                 $dsn = "mysql:host={$this->host};port={$this->port};unix_socket=/tmp/mysql.sock;dbname={$this->dbname};charset=utf8mb4";
-                $options = [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES => false,
-                ];
+            } else {
+                // Production: Standard TCP connection
+                $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};charset=utf8mb4";
             }
+            
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::ATTR_TIMEOUT => 30
+            ];
 
             $this->pdo = new PDO($dsn, $this->username, $this->password, $options);
         } catch (PDOException $e) {
@@ -79,18 +78,22 @@ class Database {
         }
     }
 
+    private function isLocalhost() {
+        return in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1', '::1']);
+    }
+
     public function getConnection() {
         return $this->pdo;
     }
 
     public function createDatabase() {
+        // Skip database creation on free hosting (databases are pre-created)
+        if (!$this->isLocalhost()) {
+            return true;
+        }
+        
         try {
-            // Connect without database name to create it
-            if (isset($_ENV['DATABASE_URL'])) {
-                // Production: Database already exists in managed service
-                return true;
-            }
-            
+            // Local development only
             $dsn = "mysql:host={$this->host};port={$this->port};unix_socket=/tmp/mysql.sock;charset=utf8mb4";
             $tempPdo = new PDO($dsn, $this->username, $this->password);
             $tempPdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -116,4 +119,3 @@ class Database {
         }
     }
 }
-?>

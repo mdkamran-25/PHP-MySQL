@@ -55,13 +55,13 @@ if ($_GET['setup'] !== 'true') {
                     <input type="hidden" name="hosting_platform" value="" id="platform_hidden">
                     
                     <label>Database Host:</label>
-                    <input type="text" name="db_host" placeholder="e.g., sql200.infinityfree.com" required>
+                    <input type="text" name="db_host" placeholder="e.g., sql200.infinityfree.com" value="sql200.infinityfree.com" required>
                     
                     <label>Database Name:</label>
-                    <input type="text" name="db_name" placeholder="e.g., if0_12345_productcatalog" required>
+                    <input type="text" name="db_name" placeholder="e.g., if0_39899884_productcatalog" value="if0_39899884_productcatalog" required>
                     
                     <label>Database Username:</label>
-                    <input type="text" name="db_user" placeholder="e.g., if0_12345" required>
+                    <input type="text" name="db_user" placeholder="e.g., if0_39899884" value="if0_39899884" required>
                     
                     <label>Database Password:</label>
                     <input type="password" name="db_pass" placeholder="Your database password" required>

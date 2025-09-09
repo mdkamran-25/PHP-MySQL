@@ -20,12 +20,12 @@ class Database {
     private function setCredentials() {
         // Auto-detect hosting environment
         if ($this->isInfinityFree()) {
-            // InfinityFree configuration
+            // InfinityFree configuration for account if0_39899884
             $this->host = 'sql200.infinityfree.com'; // Will be provided by InfinityFree
             $this->port = 3306;
-            $this->dbname = $_ENV['DB_NAME'] ?? 'if0_12345678_productcatalog'; // Replace with your DB name
-            $this->username = $_ENV['DB_USER'] ?? 'if0_12345678'; // Replace with your username
-            $this->password = $_ENV['DB_PASS'] ?? 'your_password'; // Replace with your password
+            $this->dbname = $_ENV['DB_NAME'] ?? 'if0_39899884_productcatalog'; // Your database name
+            $this->username = $_ENV['DB_USER'] ?? 'if0_39899884'; // Your username
+            $this->password = $_ENV['DB_PASS'] ?? 'your_password'; // Replace with actual password
         } elseif ($this->is000webhost()) {
             // 000webhost configuration
             $this->host = 'localhost';
@@ -45,7 +45,8 @@ class Database {
 
     private function isInfinityFree() {
         return strpos($_SERVER['HTTP_HOST'] ?? '', '.infinityfreeapp.com') !== false ||
-               strpos($_SERVER['HTTP_HOST'] ?? '', '.000.pe') !== false;
+               strpos($_SERVER['HTTP_HOST'] ?? '', '.000.pe') !== false ||
+               strpos($_SERVER['HTTP_HOST'] ?? '', 'kamran.gamer.gd') !== false;
     }
 
     private function is000webhost() {
