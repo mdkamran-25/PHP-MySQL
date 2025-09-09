@@ -58,7 +58,7 @@ if ($_GET['setup'] !== 'true') {
                     <input type="text" name="db_host" placeholder="e.g., sql200.infinityfree.com" value="sql200.infinityfree.com" required>
                     
                     <label>Database Name:</label>
-                    <input type="text" name="db_name" placeholder="e.g., if0_39899884_productcatalog" value="if0_39899884_productcatalog" required>
+                    <input type="text" name="db_name" placeholder="e.g., if0_39899884_kamran_db" value="if0_39899884_kamran_db" required>
                     
                     <label>Database Username:</label>
                     <input type="text" name="db_user" placeholder="e.g., if0_39899884" value="if0_39899884" required>

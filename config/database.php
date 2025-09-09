@@ -23,7 +23,7 @@ class Database {
             // InfinityFree configuration for account if0_39899884
             $this->host = 'sql200.infinityfree.com'; // Will be provided by InfinityFree
             $this->port = 3306;
-            $this->dbname = $_ENV['DB_NAME'] ?? 'if0_39899884_productcatalog'; // Your database name
+            $this->dbname = $_ENV['DB_NAME'] ?? 'if0_39899884_kamran_db'; // Your actual database name
             $this->username = $_ENV['DB_USER'] ?? 'if0_39899884'; // Your username
             $this->password = $_ENV['DB_PASS'] ?? 'your_password'; // Replace with actual password
         } elseif ($this->is000webhost()) {
