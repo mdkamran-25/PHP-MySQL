@@ -1,0 +1,31 @@
+name: product-catalog-app
+services:
+  - name: web
+    source_dir: /
+    github:
+      repo: your-username/product-catalog-backend
+      branch: main
+    run_command: php -S 0.0.0.0:8080 -t .
+    environment_slug: php
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    http_port: 8080
+    routes:
+      - path: /
+    envs:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: ${product-catalog-db.DATABASE_URL}
+
+databases:
+  - name: product-catalog-db
+    engine: MYSQL
+    version: "8"
+    size: db-s-1vcpu-1gb
+
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED

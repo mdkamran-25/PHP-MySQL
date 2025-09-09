@@ -1,0 +1,32 @@
+# Logs
+logs/*.log
+logs/*.txt
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Backup files
+*.backup
+*.bak
+
+# Cache
+cache/
+tmp/
+*.md
