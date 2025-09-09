@@ -25,7 +25,7 @@ class Database {
             $this->port = 3306;
             $this->dbname = $_ENV['DB_NAME'] ?? 'if0_39899884_kamran_db'; // Your actual database name
             $this->username = $_ENV['DB_USER'] ?? 'if0_39899884'; // Your username
-            $this->password = $_ENV['DB_PASS'] ?? 'your_password'; // Replace with actual password
+            $this->password = $_ENV['DB_PASS'] ?? 'Kamran8bp'; // Replace with actual password
         } elseif ($this->is000webhost()) {
             // 000webhost configuration
             $this->host = 'localhost';
